@@ -1,8 +1,7 @@
 {
-  "name": "discord-language-bot",
+  "name": "reading-fox",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node index.js"
   },
