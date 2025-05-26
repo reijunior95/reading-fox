@@ -1,4 +1,4 @@
-// index.js 
+// index.js (refatorado para estrutura de design semelhante ao modelo das imagens)
 
 require("dotenv").config();
 const {
