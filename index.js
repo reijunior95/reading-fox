@@ -63,7 +63,7 @@ await interaction.reply({
   embeds: [
     new EmbedBuilder()
       .setTitle("📚 Sesión de Lectura / Reading Session | Multilingual")
-      .setDescription("-- Cola / Queue --\nVacío / Empty\n\nif bugs: ping Kesa
+      .setDescription("-- Cola / Queue --\nVacío / Empty\n\nif bugs: ping Kesa")
       .setColor("Blue")
   ],
   components: [
