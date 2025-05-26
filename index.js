@@ -22,14 +22,14 @@ Events
 const { getTextsByLanguage } = require("./utils\_sheets");
 
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds],
-  partials: [Partials.Channel]
+intents: [GatewayIntentBits.Guilds],
+partials: \[Partials.Channel]
 });
 
-const queue = \[];
+const queue = [];
 const corrections = {};
 
-const commands = \[
+const commands = [
 new SlashCommandBuilder()
 .setName('queue')
 .setDescription('Start a new practice queue')
@@ -63,7 +63,7 @@ await interaction.reply({
   embeds: [
     new EmbedBuilder()
       .setTitle("📚 Sesión de Lectura / Reading Session | Multilingual")
-      .setDescription("-- Cola / Queue --\nVacío / Empty\n\nif bugs: ping @pip\nif text problem: ping @bobi")
+      .setDescription("-- Cola / Queue --\nVacío / Empty\n\nif bugs: ping Kesa
       .setColor("Blue")
   ],
   components: [
