@@ -86,7 +86,7 @@ if (interaction.customId === "join") {
   if (!queue.includes(userId)) queue.push(userId);
 
   await interaction.channel.send({
-    content: `👤 <@${userId}> joined the queue!\n**Please choose your language or submit your own text:**`,
+    content: `<@${userId}> joined the queue!\n**Please choose your language or submit your own text:**`,
     components: [
       new ActionRowBuilder().addComponents(
         new ButtonBuilder().setCustomId("lang_english").setLabel("English").setStyle(ButtonStyle.Primary),
