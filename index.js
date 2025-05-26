@@ -13,6 +13,9 @@ const {
   ButtonBuilder,
   EmbedBuilder,
   SlashCommandBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+  ModalBuilder,
   Events
 } = require("discord.js");
 
@@ -79,13 +82,16 @@ client.on(Events.InteractionCreate, async interaction => {
     if (interaction.customId === "join") {
       if (!queue.includes(userId)) queue.push(userId);
       await interaction.reply({
-        content: `✅ <@${userId}> joined the queue!\n\n🌐 Please choose your language:`,
+        content: `✅ <@${userId}> joined the queue!\n\n🌐 Please choose your language or submit your own text:`,
         components: [
           new ActionRowBuilder().addComponents(
             new ButtonBuilder().setCustomId("lang_english").setLabel("English").setStyle(ButtonStyle.Primary),
             new ButtonBuilder().setCustomId("lang_spanish").setLabel("Spanish").setStyle(ButtonStyle.Primary),
             new ButtonBuilder().setCustomId("lang_french").setLabel("French").setStyle(ButtonStyle.Primary),
             new ButtonBuilder().setCustomId("lang_portuguese").setLabel("Portuguese").setStyle(ButtonStyle.Primary)
+          ),
+          new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId("submit_custom_text").setLabel("Submit My Own Text").setStyle(ButtonStyle.Secondary)
           )
         ],
         ephemeral: true
@@ -126,6 +132,32 @@ client.on(Events.InteractionCreate, async interaction => {
         console.error("Error fetching texts:", err);
         return interaction.reply({ content: `⚠️ Error retrieving texts.`, ephemeral: true });
       }
+    }
+
+    if (interaction.customId === "submit_custom_text") {
+      const modal = new ModalBuilder()
+        .setCustomId("custom_text_modal")
+        .setTitle("Submit Your Text")
+        .addComponents(
+          new ActionRowBuilder().addComponents(
+            new TextInputBuilder()
+              .setCustomId("custom_text_input")
+              .setLabel("Paste your text here")
+              .setStyle(TextInputStyle.Paragraph)
+              .setRequired(true)
+          )
+        );
+      await interaction.showModal(modal);
+    }
+  } else if (interaction.isModalSubmit()) {
+    if (interaction.customId === "custom_text_modal") {
+      const text = interaction.fields.getTextInputValue("custom_text_input");
+      await interaction.reply({
+        content: `📩 Here's the text you submitted:
+
+"${text}"`,
+        ephemeral: true
+      });
     }
   }
 });
