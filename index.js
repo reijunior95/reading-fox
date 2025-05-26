@@ -22,8 +22,8 @@ Events
 const { getTextsByLanguage } = require("./utils\_sheets");
 
 const client = new Client({
-intents: [GatewayIntentBits.Guilds],
-partials: \[Partials.Channel]
+  intents: [GatewayIntentBits.Guilds],
+  partials: [Partials.Channel]
 });
 
 const queue = \[];
