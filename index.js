@@ -154,11 +154,50 @@ client.on(Events.InteractionCreate, async interaction => {
       if (currentIndex !== -1) {
         queue.splice(currentIndex, 1);
         queue.push(userId);
+
+        const nextUser = queue[0];
+        if (nextUser) {
+          await interaction.reply({
+            content: `🔁 <@${userId}> passed their turn. Now it's <@${nextUser}>'s turn.`,
+            ephemeral: true
+          });
+
+          const channel = interaction.channel;
+          if (channel) {
+          await channel.send({
+              content: `👋 It's your turn! Please choose your language or submit your own text:`,
+              components: [
+                new ActionRowBuilder().addComponents(
+                  new ButtonBuilder().setCustomId("lang_english").setLabel("English").setStyle(ButtonStyle.Primary),
+                  new ButtonBuilder().setCustomId("lang_spanish").setLabel("Spanish").setStyle(ButtonStyle.Primary),
+                  new ButtonBuilder().setCustomId("lang_french").setLabel("French").setStyle(ButtonStyle.Primary),
+                  new ButtonBuilder().setCustomId("lang_portuguese").setLabel("Portuguese").setStyle(ButtonStyle.Primary)
+                ),
+                new ActionRowBuilder().addComponents(
+                  new ButtonBuilder().setCustomId("submit_custom_text").setLabel("Submit My Own Text").setStyle(ButtonStyle.Secondary),
+                  new ButtonBuilder().setCustomId("pass_turn").setLabel("Pass Turn").setStyle(ButtonStyle.Danger)
+                )
+              ]
+            });
+          }
+        } else {
+          await interaction.reply({
+            content: `🔁 <@${userId}> passed their turn.`,
+            ephemeral: true
+          });
+        }
+      } else {
+        await interaction.reply({
+          content: `⚠️ You are not in the queue.`,
+          ephemeral: true
+        });
       }
-      await interaction.reply({
-        content: `🔁 <@${userId}> passed their turn.`,
-        ephemeral: true
-      });
+    } else {
+        await interaction.reply({
+          content: `⚠️ You are not in the queue.`,
+          ephemeral: true
+        });
+      }
     }
   } else if (interaction.isModalSubmit()) {
     if (interaction.customId === "custom_text_modal") {
