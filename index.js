@@ -91,7 +91,8 @@ client.on(Events.InteractionCreate, async interaction => {
             new ButtonBuilder().setCustomId("lang_portuguese").setLabel("Portuguese").setStyle(ButtonStyle.Primary)
           ),
           new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setCustomId("submit_custom_text").setLabel("Submit My Own Text").setStyle(ButtonStyle.Secondary)
+            new ButtonBuilder().setCustomId("submit_custom_text").setLabel("Submit My Own Text").setStyle(ButtonStyle.Secondary),
+            new ButtonBuilder().setCustomId("pass_turn").setLabel("Pass Turn").setStyle(ButtonStyle.Danger)
           )
         ],
         ephemeral: true
@@ -123,9 +124,7 @@ client.on(Events.InteractionCreate, async interaction => {
         const random = texts[Math.floor(Math.random() * texts.length)];
 
         return interaction.reply({
-          content: `📘 Here's a random text for **${language}**:
-
-"${random.text}"`,
+          content: `📘 Here's a random text for **${language}**:\n\n"${random.text}"`,
           ephemeral: true
         });
       } catch (err) {
@@ -149,13 +148,23 @@ client.on(Events.InteractionCreate, async interaction => {
         );
       await interaction.showModal(modal);
     }
+
+    if (interaction.customId === "pass_turn") {
+      const currentIndex = queue.indexOf(userId);
+      if (currentIndex !== -1) {
+        queue.splice(currentIndex, 1);
+        queue.push(userId);
+      }
+      await interaction.reply({
+        content: `🔁 <@${userId}> passed their turn.`,
+        ephemeral: true
+      });
+    }
   } else if (interaction.isModalSubmit()) {
     if (interaction.customId === "custom_text_modal") {
       const text = interaction.fields.getTextInputValue("custom_text_input");
       await interaction.reply({
-        content: `📩 Here's the text you submitted:
-
-"${text}"`,
+        content: `📩 Here's the text you submitted:\n\n"${text}"`,
         ephemeral: true
       });
     }
