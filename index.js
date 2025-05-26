@@ -23,7 +23,7 @@ const { getTextsByLanguage } = require("./utils\_sheets");
 
 const client = new Client({
 intents: [GatewayIntentBits.Guilds],
-partials: \[Partials.Channel]
+partials: [Partials.Channel]
 });
 
 const queue = [];
@@ -194,7 +194,7 @@ if (interaction.isModalSubmit()) {
 if (interaction.customId === "custom\_text\_modal") {
 const text = interaction.fields.getTextInputValue("custom\_text\_input");
 await interaction.channel.send({
-embeds: \[
+embeds: [
 new EmbedBuilder().setTitle("📩 Custom Text Submitted").setDescription(text).setColor("Purple")
 ]
 });
