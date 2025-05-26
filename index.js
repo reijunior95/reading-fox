@@ -22,7 +22,7 @@ Events
 const { getTextsByLanguage } = require("./utils\_sheets");
 
 const client = new Client({
-intents: \[GatewayIntentBits.Guilds],
+intents: [GatewayIntentBits.Guilds],
 partials: \[Partials.Channel]
 });
 
