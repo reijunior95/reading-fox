@@ -1,7 +1,22 @@
 // index.js
 
 require("dotenv").config();
-const { Client, GatewayIntentBits, Partials, REST, Routes, InteractionType, ButtonStyle, ActionRowBuilder, ButtonBuilder, EmbedBuilder, SlashCommandBuilder, Events } = require("discord.js");
+const {
+  Client,
+  GatewayIntentBits,
+  Partials,
+  REST,
+  Routes,
+  InteractionType,
+  ButtonStyle,
+  ActionRowBuilder,
+  ButtonBuilder,
+  EmbedBuilder,
+  SlashCommandBuilder,
+  Events
+} = require("discord.js");
+
+const { getTextsByLanguage } = require("./utils_sheets");
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
@@ -63,7 +78,18 @@ client.on(Events.InteractionCreate, async interaction => {
 
     if (interaction.customId === "join") {
       if (!queue.includes(userId)) queue.push(userId);
-      await interaction.reply({ content: `✅ <@${userId}> joined the queue!`, ephemeral: true });
+      await interaction.reply({
+        content: `✅ <@${userId}> joined the queue!\n\n🌐 Please choose your language:`,
+        components: [
+          new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId("lang_english").setLabel("English").setStyle(ButtonStyle.Primary),
+            new ButtonBuilder().setCustomId("lang_spanish").setLabel("Spanish").setStyle(ButtonStyle.Primary),
+            new ButtonBuilder().setCustomId("lang_french").setLabel("French").setStyle(ButtonStyle.Primary),
+            new ButtonBuilder().setCustomId("lang_portuguese").setLabel("Portuguese").setStyle(ButtonStyle.Primary)
+          )
+        ],
+        ephemeral: true
+      });
     }
 
     if (interaction.customId === "leave") {
@@ -77,6 +103,29 @@ client.on(Events.InteractionCreate, async interaction => {
         content: "📘 **Instructions:**\n\n1. Click 'Join' to enter the queue.\n2. When it's your turn, select a language or submit your own text.\n3. Provide or receive corrections.\n4. Pass the turn when done.",
         ephemeral: true
       });
+    }
+
+    if (interaction.customId.startsWith("lang_")) {
+      const language = interaction.customId.replace("lang_", "");
+
+      try {
+        const texts = await getTextsByLanguage(language);
+        if (!texts.length) {
+          return interaction.reply({ content: `❌ No texts found for **${language}**.`, ephemeral: true });
+        }
+
+        const random = texts[Math.floor(Math.random() * texts.length)];
+
+        return interaction.reply({
+          content: `📘 Here's a random text for **${language}**:
+
+"${random.text}"`,
+          ephemeral: true
+        });
+      } catch (err) {
+        console.error("Error fetching texts:", err);
+        return interaction.reply({ content: `⚠️ Error retrieving texts.`, ephemeral: true });
+      }
     }
   }
 });
