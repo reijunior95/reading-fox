@@ -19,7 +19,7 @@ ModalBuilder,
 Events
 } = require("discord.js");
 
-const { getTextsByLanguage } = require("./utils\_sheets");
+const { getTextsByLanguage } = require("./utils_sheets");
 
 const client = new Client({
 intents: [GatewayIntentBits.Guilds],
@@ -36,12 +36,12 @@ new SlashCommandBuilder()
 .toJSON()
 ];
 
-const rest = new REST({ version: '10' }).setToken(process.env.BOT\_TOKEN);
+const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 (async () => {
 try {
 console.log('Registering slash command...');
 await rest.put(
-Routes.applicationCommands(process.env.CLIENT\_ID),
+Routes.applicationCommands(process.env.CLIENT_ID),
 { body: commands }
 );
 console.log('Slash command registered successfully ✅');
@@ -191,8 +191,8 @@ if (interaction.customId === "pass_turn") {
 }
 
 if (interaction.isModalSubmit()) {
-if (interaction.customId === "custom\_text\_modal") {
-const text = interaction.fields.getTextInputValue("custom\_text\_input");
+if (interaction.customId === "custom_text_modal") {
+const text = interaction.fields.getTextInputValue("custom_text_input");
 await interaction.channel.send({
 embeds: [
 new EmbedBuilder().setTitle("📩 Custom Text Submitted").setDescription(text).setColor("Purple")
@@ -224,4 +224,4 @@ if (interaction.customId === "corrections_modal") {
 }
 });
 
-client.login(process.env.BOT\_TOKEN);
+client.login(process.env.BOT_TOKEN);
