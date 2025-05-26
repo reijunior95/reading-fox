@@ -2,7 +2,7 @@
 
 require("dotenv").config();
 const { Client, GatewayIntentBits, Partials, REST, Routes, InteractionType, ButtonStyle, ActionRowBuilder, ButtonBuilder, EmbedBuilder, SlashCommandBuilder, Events } = require("discord.js");
-const { loadTextsForLanguage } = require("./utils/sheets");
+const { loadTextsForLanguage } = require("./utils_sheets");
 const { getQueue, addToQueue, removeFromQueue, nextInQueue } = require("./utils/queue");
 
 const client = new Client({
