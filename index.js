@@ -1,9 +1,9 @@
 // Arquivo: index.js
 
-import("dotenv").config();
-const { Client, GatewayIntentBits, Partials, REST, Routes, InteractionType, ButtonStyle, ActionRowBuilder, ButtonBuilder, EmbedBuilder, SlashCommandBuilder, Events } = import("discord.js");
-const { loadTextsForLanguage } = import("./utils/sheets");
-const { getQueue, addToQueue, removeFromQueue, nextInQueue } = import("./utils/queue");
+require("dotenv").config();
+const { Client, GatewayIntentBits, Partials, REST, Routes, InteractionType, ButtonStyle, ActionRowBuilder, ButtonBuilder, EmbedBuilder, SlashCommandBuilder, Events } = require("discord.js");
+const { loadTextsForLanguage } = require("./utils/sheets");
+const { getQueue, addToQueue, removeFromQueue, nextInQueue } = require("./utils/queue");
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
