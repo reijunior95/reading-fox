@@ -1,8 +1,7 @@
-// Arquivo: index.js
+// index.js
 
 require("dotenv").config();
 const { Client, GatewayIntentBits, Partials, REST, Routes, InteractionType, ButtonStyle, ActionRowBuilder, ButtonBuilder, EmbedBuilder, SlashCommandBuilder, Events } = require("discord.js");
-const { loadTextsForLanguage } = require("./utils_sheets");
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
@@ -10,6 +9,29 @@ const client = new Client({
 });
 
 const queue = [];
+
+// REGISTRA COMANDO SLASH
+const commands = [
+  new SlashCommandBuilder()
+    .setName('queue')
+    .setDescription('Start a new practice queue')
+    .toJSON()
+];
+
+const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
+
+(async () => {
+  try {
+    console.log('Registering slash command...');
+    await rest.put(
+      Routes.applicationCommands(process.env.CLIENT_ID),
+      { body: commands }
+    );
+    console.log('Slash command registered successfully ✅');
+  } catch (err) {
+    console.error('Error registering slash command:', err);
+  }
+})();
 
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
