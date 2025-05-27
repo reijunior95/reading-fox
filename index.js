@@ -100,8 +100,10 @@ if (interaction.customId === "join") {
       )
     ]
   });
+
   await interaction.deferUpdate();
 }
+
 
 if (interaction.customId === "leave") {
   const index = queue.indexOf(userId);
