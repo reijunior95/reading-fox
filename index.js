@@ -62,15 +62,15 @@ queue.length = 0;
 await interaction.reply({
   embeds: [
     new EmbedBuilder()
-      .setTitle("📚 Sesión de Lectura / Reading Session | Multilingual")
-      .setDescription("-- Cola / Queue --\nVacío / Empty\n\nif bugs: ping Kesa")
+      .setTitle("Reading Session | Multilingual")
+      .setDescription("-- Queue --\nVacío / Empty\n\nif bugs: ping Kesa")
       .setColor("Blue")
   ],
   components: [
     new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId("join").setLabel("Unirse / Enter").setStyle(ButtonStyle.Success),
-      new ButtonBuilder().setCustomId("leave").setLabel("Salir / Leave").setStyle(ButtonStyle.Danger),
-      new ButtonBuilder().setCustomId("instructions").setLabel("Instrucciones / Instructions").setStyle(ButtonStyle.Secondary)
+      new ButtonBuilder().setCustomId("join").setLabel("Enter").setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId("leave").setLabel("Leave").setStyle(ButtonStyle.Danger),
+      new ButtonBuilder().setCustomId("instructions").setLabel("Instructions").setStyle(ButtonStyle.Secondary)
     )
   ]
 });
